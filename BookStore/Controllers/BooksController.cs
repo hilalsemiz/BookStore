@@ -61,8 +61,11 @@ namespace BookStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Author,Created,Price,ViewCount,CategoryId")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Author,Price,CategoryId")] Book book)
         {
+            book.Created = DateTime.Now;
+            book.ViewCount = 0;
+
             if (ModelState.IsValid)
             {
                 _context.Add(book);
@@ -95,7 +98,7 @@ namespace BookStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Author,Created,Price,ViewCount,CategoryId")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Author,Price,Created,ViewCount,CategoryId")] Book book)
         {
             if (id != book.Id)
             {
@@ -106,6 +109,10 @@ namespace BookStore.Controllers
             {
                 try
                 {
+                    // book.Created = DateTime.Now;
+                    //var oldBook = await _context.Books.AsNoTracking().FirstOrDefaultAsync(b=>b.Id==id);
+                    //book.Created=oldBook.Created; 
+
                     _context.Update(book);
                     await _context.SaveChangesAsync();
                 }

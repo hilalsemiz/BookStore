@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Data;
 using BookStore.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace BookStore.Controllers
 {
@@ -40,11 +42,16 @@ namespace BookStore.Controllers
             {
                 return NotFound();
             }
-
+            if(category.Name=="Bilgisayar" && !User.Identity.IsAuthenticated)
+            {
+                 return Redirect("/identity/account/login");
+                
+            }
             return View(category);
         }
 
         // GET: Categories/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +60,7 @@ namespace BookStore.Controllers
         // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
