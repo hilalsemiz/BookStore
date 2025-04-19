@@ -1,0 +1,10 @@
+﻿@model IEnumerable<BookStore.Models.Category>
+
+<ul class="nav flex-column">
+    @foreach (var category in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link" href="/Books?categoryId=@category.Id">@category.Name</a>
+        </li>
+    }
+</ul>

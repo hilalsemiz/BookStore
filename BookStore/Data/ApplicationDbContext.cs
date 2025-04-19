@@ -14,6 +14,7 @@ namespace BookStore.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<BookStore.Models.Customer> Customers { get; set; }
 
 
     }
